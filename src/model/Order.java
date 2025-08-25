@@ -1,3 +1,7 @@
+package model;
+
+import model.Customer;
+
 import java.util.ArrayList;
 
 public class Order {

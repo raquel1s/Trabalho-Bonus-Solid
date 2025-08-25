@@ -1,3 +1,5 @@
+package payment;
+
 public class PaymentMethod {
 
     PaymentMethodStrategy paymentMethod;
@@ -6,7 +8,7 @@ public class PaymentMethod {
         this.paymentMethod = paymentMethod;
     }
 
-    void payment(){
+    public void payment(){
         paymentMethod.pay();
     }
 }

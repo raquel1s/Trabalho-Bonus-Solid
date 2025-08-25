@@ -1,3 +1,5 @@
+package model;
+
 public class OrderItem {
 
     private double price;

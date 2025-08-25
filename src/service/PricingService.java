@@ -1,3 +1,8 @@
+package service;
+
+import model.Order;
+import model.OrderItem;
+
 public class PricingService {
     private Order order;
 

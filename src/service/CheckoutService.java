@@ -1,9 +1,18 @@
+package service;
+
+import model.Order;
+import notification.Notifier;
+import payment.PaymentMethod;
+import payment.PaymentMethodStrategy;
+import repository.OrderRepository;
+import service.PricingService;
+
 public class CheckoutService {
 
-    private final Database database;
-    private final EmailSender emailSender;
+    private final OrderRepository database;
+    private final Notifier emailSender;
 
-    public CheckoutService(Database database, EmailSender emailSender) {
+    public CheckoutService(OrderRepository database, Notifier emailSender) {
         this.database = database;
         this.emailSender = emailSender;
     }
@@ -17,9 +26,9 @@ public class CheckoutService {
         PaymentMethod paymentMethod = new PaymentMethod(paymentStrategy);
         paymentMethod.payment();
 
-        database.processOrder(order);
+        database.save(order);
 
-        emailSender.sendEmail(order.getCustomer().getEmail(), "Pedido total: " + total);
+        emailSender.send(order.getCustomer().getEmail(), "Pedido total: " + total);
 
         return total;
     }
