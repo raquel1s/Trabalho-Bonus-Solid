@@ -1,4 +1,13 @@
 public class CheckoutService {
+
+    private final Database database;
+    private final EmailSender emailSender;
+
+    public CheckoutService(Database database, EmailSender emailSender) {
+        this.database = database;
+        this.emailSender = emailSender;
+    }
+
     public double checkout(Order order, PaymentMethodStrategy paymentStrategy) {
         System.out.println("[Checkout] iniciando pedido " + order.getId());
 
@@ -8,11 +17,9 @@ public class CheckoutService {
         PaymentMethod paymentMethod = new PaymentMethod(paymentStrategy);
         paymentMethod.payment();
 
-        // 4) Persistência acoplada (quebra DIP)
-        Database
+        database.processOrder(order);
 
-        // 5) Notificação acoplada
-        EmailSender.send(order.getCustomer().getEmail(), "Pedido aprovado: R$" + total);
+        emailSender.sendEmail(order.getCustomer().getEmail(), "Pedido total: " + total);
 
         return total;
     }
