@@ -1,6 +1,12 @@
 public class Database {
 
-    public static void save(int orderId, double total){
+    private OrderRepository repository;
 
+    public Database(OrderRepository repository) {
+        this.repository = repository;
+    }
+
+    public void processOrder(Order order){
+        repository.save(order);
     }
 }

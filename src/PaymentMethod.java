@@ -6,7 +6,7 @@ public class PaymentMethod {
         this.paymentMethod = paymentMethod;
     }
 
-    void payment(String paymentType){
-        paymentMethod.pay(paymentType);
+    void payment(){
+        paymentMethod.pay();
     }
 }
