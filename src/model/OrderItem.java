@@ -19,6 +19,10 @@ public class OrderItem {
         return quantity;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
