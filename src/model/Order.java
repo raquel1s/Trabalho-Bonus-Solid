@@ -11,10 +11,10 @@ public class Order {
     private ArrayList<OrderItem> items;
     private Customer customer;
 
-    public Order(Customer customer) {
+    public Order(Customer customer, ArrayList<OrderItem> items) {
         this.id = contador;
         contador++;
-        this.items = new ArrayList<>();
+        this.items = items;
         this.customer = customer;
     }
 

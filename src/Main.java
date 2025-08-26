@@ -3,8 +3,13 @@ import model.Order;
 import model.OrderItem;
 import notification.EmailSender;
 import notification.Notifier;
+import payment.CreditCardPayment;
+import payment.PaymentMethod;
+import payment.PaymentMethodStrategy;
+import payment.PixPayment;
 import repository.Database;
 import repository.OrderRepository;
+import service.CheckoutService;
 import view.Menu;
 
 import java.util.ArrayList;
@@ -16,6 +21,7 @@ public class Main {
 
     private static OrderRepository repository = new Database();
     private static Notifier notifier = new EmailSender();
+    private static CheckoutService checkoutService = new CheckoutService(repository, notifier);
     private static Scanner sc = new Scanner(System.in);
     private static ArrayList<Customer> customers = new ArrayList<>();
     private static ArrayList<OrderItem> items = new ArrayList<>();
@@ -55,17 +61,79 @@ public class Main {
     }
 
     private static void criarPedido() {
+        int opcao = 0;
+        ArrayList<OrderItem> itensPedido = new ArrayList<>();
+        Customer customer = null;
+        PaymentMethodStrategy paymentMethod = null;
+
         System.out.println("-- Criar Pedido --");
 
+        do{
+            for (OrderItem it : items) {
+                System.out.println(it);
+            }
 
+            System.out.println("Digite o nome do item: ");
+            String nome = sc.nextLine();
+
+            for(OrderItem it : items){
+                if(nome.equals(it.getName())){
+                    itensPedido.add(it);
+                }
+            }
+
+            System.out.println("Deseja adicionar mais um item?");
+            System.out.println("1- SIM");
+            System.out.println("0- NÃO");
+            opcao = sc.nextInt();
+            sc.nextLine();
+
+        }while(opcao != 0);
+
+        for(Customer c : customers){
+            System.out.println(c);
+        }
+
+        System.out.println("Digite o email do cliente: ");
+        String email = sc.nextLine();
+
+        for(Customer c : customers){
+            if(email.equals(c.getEmail())){
+                customer = c;
+            }
+        }
+
+        Order order = new Order(customer, itensPedido);
+
+        System.out.println("Digite a forma de pagamento: ");
+        System.out.println("1 - PIX");
+        System.out.println("2 - Cartão de crédito");
+        int pagameto = sc.nextInt();
+
+        switch (pagameto){
+            case 1 -> paymentMethod = new PixPayment();
+            case 2 -> paymentMethod = new CreditCardPayment();
+        }
+
+        checkoutService.checkout(order, paymentMethod);
     }
 
     private static void criarCliente() {
+        boolean isEstudante = true;
         System.out.println("-- Adicionar Cliente --");
         System.out.println("Digite seu email: ");
         String email = sc.nextLine();
 
-        Customer customer = new Customer(email);
+        System.out.println("O cliente é estudante?");
+        System.out.println("1- SIM");
+        System.out.println("0- NÃO");
+        int estudante = sc.nextInt();
+
+        if(estudante == 0){
+            isEstudante = false;
+        }
+
+        Customer customer = new Customer(email, isEstudante);
         customers.add(customer);
     }
 }
