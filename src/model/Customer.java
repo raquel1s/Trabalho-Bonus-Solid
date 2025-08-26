@@ -5,8 +5,9 @@ public class Customer {
     private String email;
     private boolean student;
 
-    public Customer(String email) {
+    public Customer(String email, boolean student) {
         this.email = email;
+        this.student = student;
     }
 
     public boolean isStudent() {
@@ -15,5 +16,12 @@ public class Customer {
 
     public String getEmail() {
         return email;
+    }
+
+    @Override
+    public String toString() {
+        return  "\nEmail: " + email +
+                "\nO cliente é estudante: " + student +
+                '\n';
     }
 }
