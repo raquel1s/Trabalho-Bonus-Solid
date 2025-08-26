@@ -2,12 +2,13 @@ package model;
 
 public class OrderItem {
 
+    private String name;
     private double price;
     private int quantity;
 
-    public OrderItem(double price, int quantity) {
+    public OrderItem(double price, String name) {
         this.price = price;
-        this.quantity = quantity;
+        this.name = name;
     }
 
     public double getPrice() {
@@ -16,5 +17,9 @@ public class OrderItem {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

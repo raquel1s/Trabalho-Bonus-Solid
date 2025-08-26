@@ -6,12 +6,14 @@ import java.util.ArrayList;
 
 public class Order {
 
+    private static int contador = 1;
     private int id;
     private ArrayList<OrderItem> items;
     private Customer customer;
 
-    public Order(int id, Customer customer) {
-        this.id = id;
+    public Order(Customer customer) {
+        this.id = contador;
+        contador++;
         this.items = new ArrayList<>();
         this.customer = customer;
     }
