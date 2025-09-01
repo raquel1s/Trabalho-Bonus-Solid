@@ -6,5 +6,6 @@ public class Menu {
         System.out.println("== CANTINA DO SENAI ==");
         System.out.println("1 - Criar cliente");
         System.out.println("2 - Criar Pedido");
+        System.out.println("3 - Criar Item");
     }
 }
