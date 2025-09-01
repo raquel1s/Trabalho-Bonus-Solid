@@ -76,8 +76,12 @@ public class Main {
             System.out.println("Digite o nome do item: ");
             String nome = sc.nextLine();
 
+            System.out.println("Digite a quantidade que deseja: ");
+            int quantidade = sc.nextInt();
+
             for(OrderItem it : items){
                 if(nome.equals(it.getName())){
+                    it.setQuantity(quantidade);
                     itensPedido.add(it);
                 }
             }
